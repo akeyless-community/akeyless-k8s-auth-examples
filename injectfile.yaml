@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-file
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-secrets-2
+  template:
+    metadata:
+      labels:
+        app: hello-secrets-2
+      annotations:
+        akeyless/enabled: "true"
+        akeyless/inject_file: "/Sandbox/2 - Static/Example"
+    spec:
+      serviceAccountName: cg-akl-azure-k8s-sa
+      containers:
+        - name: alpine
+          image: alpine
+          command:
+            - "sh"
+            - "-c"
+            - "cat '/akeyless/secrets/Sandbox/2 - Static/Example' && echo going to sleep... && sleep 10000"

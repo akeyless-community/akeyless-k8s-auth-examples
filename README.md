@@ -98,5 +98,17 @@ We note there is now an error stating the access ID for the kubernetes auth meth
 
 We need to create an Access Role and associate the kubernetes auth method to it and then we need to add an item rule allowing Read and List access to the target secret.
 
+## Deploy the Akeyless Kubernetes Secrets Injector
 
+```sh
+helm repo add akeyless https://akeylesslabs.github.io/helm-charts
+helm repo update
+helm install aks akeyless/akeyless-secrets-injection --namespace akeyless -f k8s-secrets-injector-values.yaml
+```
+
+White listing the k8s namespace to enable the akeyless-secrets-injection helm chart by adding a name label to the namespace
+
+```sh
+kubectl label namespace k8s name=akeyless-enable
+```
 
